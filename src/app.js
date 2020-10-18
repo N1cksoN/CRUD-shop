@@ -1,18 +1,24 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const http = require('http');
-require('dotenv').config();
+const Router = require('./routes/index.js');
 const port = process.env.PORT;
 const app = express();
-
-//Mongo
-mongoose.connect(process.env.DATAB_URL, { useNewUrlParser: true, useUnifiedTopology : true })
-.then(() => console.log('connected to Mongo'))
-.catch((err)=> console.log(err));
+require('dotenv').config();
 
 //bodyParser
-app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json()); 
+
+//Mongo
+mongoose.connect(process.env.DATAB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('connected to mongo'))
+.catch((err)=> console.log(err));
+
+app.use(Router);
 
 //server
 const server = http.createServer(app);
