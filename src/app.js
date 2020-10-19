@@ -6,14 +6,14 @@ const port = process.env.PORT;
 const app = express();
 require('dotenv').config();
 
-//bodyParser
-//app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json()); 
 
 //Mongo
 mongoose.connect(process.env.DATAB_URL, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
 })
 .then(() => console.log('connected to mongo'))
 .catch((err)=> console.log(err));
