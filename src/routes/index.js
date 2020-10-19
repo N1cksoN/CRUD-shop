@@ -2,7 +2,7 @@ const express = require('express');
 const itemModel = require('../models/item');
 const app = express();
 
-// CREATE
+// CREATE(all)
 app.post('/item', async (req, res) => {
   const item = new itemModel(req.body);
   try {
@@ -13,9 +13,9 @@ app.post('/item', async (req, res) => {
   }
 });
 
-// READ
+// READ: all items
 app.get('/items', async (req, res) => {
-  const items = await itemModel.find({});
+  const items = await itemModel.find({ });
 
   try {
     res.send(items);
@@ -24,14 +24,25 @@ app.get('/items', async (req, res) => {
   }
 });
 
+// READ: items by id
+app.get('/items/:id', async(req, res) => {
+  const item = await itemModel.findById(req.params.id, req.body);
+  
+  try {
+    res.send(item);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+})
+
 // UPDATE: updating each item by id
 app.patch('/item/:id', async (req, res) => {
   try {
-    await itemModel.findByIdAndUpdate(req.params.id, req.body)
-    await itemModel.save()
-    res.send(item)
+    await itemModel.findByIdAndUpdate(req.params.id, req.body);
+    await itemModel.save();
+    res.send(item);
   } catch (err) {
-    res.status(500).send(err)
+    res.status(500).send(err);
   }
 });
 
@@ -39,12 +50,12 @@ app.patch('/item/:id', async (req, res) => {
 // DELETE: to remove an item by id we should place an id at the end of url: localhost:3000/food/<someone's id>
 app.delete('/item/:id', async (req, res) => {
   try {
-    const item = await itemModel.findByIdAndDelete(req.params.id)
+    const item = await itemModel.findByIdAndDelete(req.params.id);
 
     if (!item) res.status(404).send("No item found")
-    res.status(200).send()
+    res.status(200).send();
   } catch (err) {
-    res.status(500).send(err)
+    res.status(500).send(err);
   }
 });
 
