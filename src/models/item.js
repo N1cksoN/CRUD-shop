@@ -39,7 +39,10 @@ const ItemSchema = new mongoose.Schema({
 
   available_amount: {
     type: Number,
-    required: true
+    required: true,
+    validate(value) {
+      if (value < 0) throw new Error("Could not be negative price.");
+    }
   }
 });
 
