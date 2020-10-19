@@ -8,19 +8,19 @@ require('dotenv').config();
 
 app.use(express.json()); 
 
-//Mongo
+//Mongo connection
 mongoose.connect(process.env.DATAB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
   useCreateIndex: true
 })
-.then(() => console.log('connected to mongo'))
+.then(() => console.log('Connected to mongo...'))
 .catch((err)=> console.log(err));
 
 app.use(Router);
 
-//server
+//server connection
 const server = http.createServer(app);
 server.listen(port, () => {
 	console.log(`Server started on ${ port }...`);
