@@ -13,7 +13,7 @@ const ItemSchema = new mongoose.Schema({
     type: Number,
     required: true,
     validate(value) {
-      if (value < 0) throw new Error("Could not be negative price.");
+      if (value < 0) throw new Error("Could not have negative price.");
     }
   },
 
@@ -41,7 +41,7 @@ const ItemSchema = new mongoose.Schema({
     type: Number,
     required: true,
     validate(value) {
-      if (value < 0) throw new Error("Could not be negative price.");
+      if (value < 0) throw new Error("Could not have negative price.");
     }
   }
 });
